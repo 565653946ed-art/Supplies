@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,18 +8,25 @@
 
 <body>
 	<h1 align="center">在庫管理システム</h1>
-	<table border="0" width="600" align="center" style="margin-bottom:10px;">
-  <tr>
-    <td align="left">
-      ログインユーザー：<span th:text="${loginUser.username}">さん</span>
-    </td>
-    <td align="right">
-      <form th:action="@{logout}" method="get" style="display:inline;">
-        <button type="submit">ログアウト</button>
-      </form>
-    </td>
-  </tr>
-</table>
+	<table border="0" style="width:100%; max-width:800px; margin:0 auto;">
+		<tr>
+			<td align="left">
+				<p sec:authorize="hasRole('ADMIN')">
+					👑 管理者ユーザー
+				</p>
+
+				<p sec:authorize="!hasRole('ADMIN')">
+					👤 ログインユーザー
+				</p>
+				<span th:text="${loginUser.username} + ' さん'"></span>
+			</td>
+			<td align="right">
+				<form th:action="@{logout}" method="get" style="display:inline;">
+					<button type="submit">ログアウト</button>
+				</form>
+			</td>
+		</tr>
+	</table>
 
 	<br>
 	<table border="1" cellpadding="8" cellspacing="0" align="center">
@@ -40,7 +47,7 @@
 			<th>使用</th>
 			<th>使用予定</th>
 			<th>注文</th>
-			<th>削除(在庫0)</th>
+			<th>削除</thsec:authorize="hasRole('ADMIN')">
 		</tr>
 		<tr th:each="item : ${items}">
 			<td align="center" th:text="${item.id}"></td>
@@ -67,11 +74,13 @@
 				</form>
 			</td>
 			<td align="center">
-				<form th:action="@{/menu/delete/{id}(id=${item.id})}" method="post"
+
+				<form sec:authorize="hasRole('ADMIN')" th:action="@{/menu/delete/{id}(id=${item.id})}" method="post"
 					onsubmit="return confirm('本当に削除しますか？');">
 					<button type="submit" th:disabled="${item.stock > 0}">削除</button>
 				</form>
-				</tdalign="center">
+
+			</td>
 		</tr>
 
 
@@ -88,12 +97,14 @@
 			<button type="submit">使用をリセット</button>
 		</form>
 
-		<form th:action="@{/menu/add}" method="get" style="display:inline;">
+		<form sec:authorize="hasRole('ADMIN')" th:action="@{/menu/add}" method="get" style="display:inline;">
 			<button type="submit">備品追加</button>
 		</form>
 
 
 	</div>
+	<p sec:authorize="hasRole('USER')" align="center">[削除][備品追加]は管理者のみ</p>
+	<p sec:authorize="hasRole('ADMIN')" align="center">[削除]は在庫数０の時のみ</p>
 
 
 </body>

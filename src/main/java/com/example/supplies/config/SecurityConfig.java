@@ -6,6 +6,7 @@ package com.example.supplies.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration //設定クラス
 @EnableWebSecurity //Securityを有効化
+@EnableMethodSecurity//method単位で権限制御
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final UserDetailsServiceImpl userDetailsService;
