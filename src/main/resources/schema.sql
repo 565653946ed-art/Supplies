@@ -2,6 +2,7 @@
 -- 既存テーブルがあれば削除
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS stock_history;
 
 -- ユーザー（ログイン用）
 CREATE TABLE users (
@@ -20,3 +21,15 @@ CREATE TABLE items (
   pending_usage INT NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--使用注文履歴
+CREATE TABLE stock_history(
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT,
+    item_name VARCHAR(100) NOT NULL,
+    action_type VARCHAR(50),
+    quantity INT,
+    username VARCHAR(100),
+    action_date DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

@@ -34,7 +34,7 @@
         WHERE id = #{id}
     </update>
  <!--  商品追加-->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
     	INSERT INTO items(name,stock)
     	VALUES (#{name},#{stock})
     </insert>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<title>履歴</title>
+</head>
+
+<body>
+	<h1 align="center">履歴</h1>
+	<table border="0" style="width:100%; max-width:800px; margin:0 auto;">
+		<tr>
+			<td align="left">
+				<p sec:authorize="hasRole('ADMIN')">
+					👑 管理者ユーザー
+				</p>
+
+				<p sec:authorize="!hasRole('ADMIN')">
+					👤 ログインユーザー
+				</p>
+				<span th:text="${loginUserName} + ' さん'"></span>
+			</td>
+			<td align="right">
+				<form th:action="@{logout}" method="post" style="display:inline;">
+					<button type="submit">ログアウト</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<table border="1" cellpadding="8" cellspacing="0" align="center">
+		<tr>
+			<th>日時</th>
+			<th>商品ID</th>
+			<th>商品名</th>
+			<th>操作</th>
+			<th>数量</th>
+			<th>ユーザー</th>
+		</tr>
+		<tr th:each="history : ${historyList}">
+			<td th:text="${#temporals.format(history.actionDate, 'yyyy-MM-dd HH:mm')}"></td>
+			<td th:text="${history.itemId}"></td>
+			<td th:text="${history.itemName}"></td>
+			<td th:text="${history.actionType}"></td>
+			<td th:text="${history.quantity}"></td>
+			<td th:text="${history.username}"></td>
+		</tr>
+
+	</table>
+	<hr>
+
+	<div align="center">
+		<form th:action="@{/menu}" method="get" style="display:inline;">
+			<button type="submit">MENUへ戻る</button>
+		</form>
+	</div>
+
+
+
+
+
+
+</body>
+
+</html>
