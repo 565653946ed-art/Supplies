@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.supplies.entity.Item;
 import com.example.supplies.security.LoginUser;
 import com.example.supplies.service.ItemService;
+import com.example.supplies.service.StockHistoryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemController {
 	private final ItemService itemService;
+	private final StockHistoryService historyService;
 
 	 // 商品一覧 + ログインユーザー
     @GetMapping
@@ -51,6 +53,8 @@ public class ItemController {
 	@PostMapping("/add")
 	public String add(HttpSession session, Item item) {
 		itemService.addItem(item);
+		
+		
 		return "redirect:/menu";
 	}
 
@@ -68,6 +72,7 @@ public class ItemController {
 	public String orderConfirm(Integer itemId, Integer quantity) {
 
 		itemService.orderItem(itemId, quantity);
+		
 		return "redirect:/menu";
 	}
 

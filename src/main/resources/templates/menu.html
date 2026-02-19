@@ -100,7 +100,9 @@
 		<form sec:authorize="hasRole('ADMIN')" th:action="@{/menu/add}" method="get" style="display:inline;">
 			<button type="submit">備品追加</button>
 		</form>
-
+		<form  th:action="@{/history}" method="get" style="display:inline;">
+					<button type="submit">使用・注文履歴</button>
+				</form>
 
 	</div>
 	<p sec:authorize="hasRole('USER')" align="center">[削除][備品追加]は管理者のみ</p>

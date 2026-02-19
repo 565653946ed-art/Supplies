@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.supplies.repository.StockHistoryMapper">
+<!-- 履歴登録 -->
+<insert id="insertHistory">
+	INSERT INTO stock_history
+	(item_id,item_name,action_type,quantity,username,action_date)
+	VALUES
+	(#{itemId},#{itemName},#{actionType},#{quantity},#{username},#{actionDate})
+</insert>
+
+<!-- 日付降順で取得 -->
+<select id="findAllOrderByDateDesc" resultType="com.example.supplies.entity.StockHistory">
+	SELECT *
+	FROM stock_history
+	ORDER BY action_date DESC
+
+</select>
+
+
+
+</mapper>
