@@ -9,7 +9,11 @@ VALUES
 -- 備品初期データ
 INSERT INTO items (name, stock,pending_usage)
 VALUES
-  ('ドリル', 5,0),
-  ('チップ', 10,0),
-  ('エンドミル', 7,0),
-  ('超硬ドリル', 3,0);
+  ('ポーション', 5,0),
+  ('ハイポーション', 10,0),
+  ('エーテル', 7,0),
+  ('ファニックスの尾', 3,0);
+--管理コード初期設定
+UPDATE items
+SET item_code = CONCAT('ITM', LPAD(id, 3, '0'))
+WHERE item_code IS NULL;

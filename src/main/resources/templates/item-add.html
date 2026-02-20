@@ -34,6 +34,10 @@
 
 <div align="center">
     <a th:href="@{/menu}">MENUに戻る</a>
+	<p th:if="${errorMessage}"
+	   th:text="${errorMessage}"
+	   style="color:red;">
+	</p>
 </div>
 
 </body>

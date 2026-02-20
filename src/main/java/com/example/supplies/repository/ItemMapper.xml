@@ -1,80 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.supplies.repository.ItemMapper">
-<!--itemsテーブルを扱うxml-->
-<!--  商品一覧-->
-    <select id="findAll" resultType="com.example.supplies.entity.Item">
-        SELECT 
-        	id,
-        	name,
-        	stock,
-        	pending_usage AS pendingUsage 
-        FROM items;
-    </select>
-<!--  IDで一件取得-->
-    <select id="findById" resultType="com.example.supplies.entity.Item">
-        SELECT
-        	id,
-        	name,
-        	stock,
-        	pending_usage AS pendingUsage 
-         FROM items WHERE id = #{id};
-    </select>
-  <!--  商品情報更新-->  
-    <update id="update">
-    	UPDATE items
-    	SEt name = #{name},
-    		stock = #{stock}
-    	WHERE id = #{id}
-    </update>
-<!--  在庫更新-->
-    <update id="updateStock">
-        UPDATE items
-        SET stock = #{stock}
-        WHERE id = #{id}
-    </update>
- <!--  商品追加-->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-    	INSERT INTO items(name,stock)
-    	VALUES (#{name},#{stock})
-    </insert>
-    <!--  商品削除-->
-    <delete id="deleteById">
-    	DELETE FROM items
-    	WHERE id = #{id}
-    
-    </delete>
-    <!--  使用数を仮保存-->
-    <update id="updatePendingUsage">
-        UPDATE items
-        SET pending_usage = #{usage}
-        WHERE id = #{itemId}
-    </update>
-    <!--  確定対象取得-->
-    <select id="findItemsWithPendingUsage"
-            resultType="com.example.supplies.entity.Item">
-        SELECT
-            id,
-            name,
-            stock,
-            pending_usage AS pendingUsage
-        FROM items
-        WHERE pending_usage > 0
-    </select>
-    <!--  使用を確定-->
-    <update id="confirmUsage">
-        UPDATE items
-        SET stock = #{newStock},
-            pending_usage = 0
-        WHERE id = #{itemId}
-    </update>
-<!--  仮保存を全リセット-->
-    <update id="resetAllPendingUsage">
-        UPDATE items
-        SET pending_usage = 0
-    </update>
-    
-    
-    
+	<!--itemsテーブルを扱うxml -->
+	<!-- 商品一覧 -->
+	<select id="findAll"
+		resultType="com.example.supplies.entity.Item">
+		SELECT
+		id,
+		item_code,
+		name,
+		stock,
+		pending_usage AS pendingUsage
+		FROM items;
+	</select>
+	<!-- IDで一件取得 -->
+	<select id="findById"
+		resultType="com.example.supplies.entity.Item">
+		SELECT
+		id,
+		item_code,
+		name,
+		stock,
+		pending_usage AS pendingUsage
+		FROM items WHERE id = #{id};
+	</select>
+	<!-- 商品情報更新 -->
+	<update id="update">
+		UPDATE items
+		SEt name = #{name},
+		stock = #{stock}
+		WHERE
+		id = #{id}
+	</update>
+	<!-- 在庫更新 -->
+	<update id="updateStock">
+		UPDATE items
+		SET stock = #{stock}
+		WHERE id = #{id}
+	</update>
+	<!-- 商品追加 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO items(name,stock)
+		VALUES (#{name},#{stock})
+	</insert>
+	<!-- 商品削除 -->
+	<delete id="deleteById">
+		DELETE FROM items
+		WHERE id = #{id}
+
+	</delete>
+	<!-- 使用数を仮保存 -->
+	<update id="updatePendingUsage">
+		UPDATE items
+		SET pending_usage = #{usage}
+		WHERE id =
+		#{itemId}
+	</update>
+	<!-- 確定対象取得 -->
+	<select id="findItemsWithPendingUsage"
+		resultType="com.example.supplies.entity.Item">
+		SELECT
+		id,
+		item_code,
+		name,
+		stock,
+		pending_usage AS pendingUsage
+		FROM items
+		WHERE pending_usage > 0
+	</select>
+	<!-- 使用を確定 -->
+	<update id="confirmUsage">
+		UPDATE items
+		SET stock = #{newStock},
+		pending_usage = 0
+		WHERE id = #{itemId}
+	</update>
+	<!-- 仮保存を全リセット -->
+	<update id="resetAllPendingUsage">
+		UPDATE items
+		SET pending_usage = 0
+	</update>
+	<!-- itemcode更新 -->
+	<update id="updateItemCode">
+		UPDATE items
+		SET item_code = #{itemCode}
+		WHERE id =
+		#{id}
+	</update>
+	<!-- 同じ名前がないかチェック -->
+	<select id="existsByName" resultType="boolean">
+		SELECT COUNT(*) > 0
+		FROM items
+		WHERE name = #{name}
+	</select>
+
+
+
+
+
+
+
+
+
 
 </mapper>

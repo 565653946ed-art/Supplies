@@ -9,6 +9,7 @@ public interface StockHistoryService {
 
     // 履歴保存
     void saveHistory(Integer itemId,
+    				 String itemCode,
                      String itemName,
                      String actionType,
                      Integer quantity);

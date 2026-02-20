@@ -1,4 +1,4 @@
-/*MyBatisを使いDBを扱う
+/*MyBatisを使いDBを扱う,XMLに渡す
  *Serviceクラスと連携しデータを扱う 
  */
 
@@ -37,5 +37,11 @@ public interface ItemMapper {
 	        @Param("newStock") Integer newStock);
 	//使用数の仮記録リセット
 	void resetAllPendingUsage();
+	//itemcode用
+	void updateItemCode(@Param("id") Integer id,
+            @Param("itemCode") String itemCode);
+	//同じ名前はないか判断
+	boolean existsByName(String name);
+	
 
 }
