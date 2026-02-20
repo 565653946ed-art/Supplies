@@ -31,12 +31,21 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public void addItem(Item item) {
+		if (itemMapper.existsByName(item.getName())) {
+		    throw new IllegalArgumentException("同じ名前があります");
+		}
 		//item登録
 		itemMapper.insert(item);
-
+		//idから管理コード生成
+		String newCode = "ITM" + String.format("%03d",item.getId());
+		item.setItemCode(newCode);
+		//itemCodeを更新
+		itemMapper.updateItemCode(item.getId(),newCode);
+	
 		//履歴登録
 		stockHistoryService.saveHistory(
 				item.getId(), //itemId
+				item.getItemCode(),//itemcode
 				item.getName(), //itemName
 				"追加", //action
 				item.getStock() //quantity
@@ -52,7 +61,8 @@ public class ItemServiceImpl implements ItemService {
 		itemMapper.deleteById(id);
 		//履歴登録
 		stockHistoryService.saveHistory(
-				item.getId(), //itemId        //itemId
+				item.getId(), //itemId
+				item.getItemCode(),//itemcode
 				item.getName(), //itemName
 				"削除", //action
 				item.getStock() //quantity
@@ -71,6 +81,7 @@ public class ItemServiceImpl implements ItemService {
 		//履歴保存
 		stockHistoryService.saveHistory(
 				item.getId(), //itemId
+				item.getItemCode(),//itemcode
 				item.getName(), //itemName
 				"注文", //action
 				quantity);
@@ -95,6 +106,7 @@ public class ItemServiceImpl implements ItemService {
 			//履歴用
 			stockHistoryService.saveHistory(
 					item.getId(),
+					item.getItemCode(),//itemcode
 					item.getName(),
 					"使用",
 					item.getPendingUsage());

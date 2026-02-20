@@ -33,6 +33,7 @@
 
 		<colgroup>
 			<col width="50">
+			<col width="100">
 			<col width="200">
 			<col width="60">
 			<col width="100">
@@ -42,6 +43,7 @@
 		</colgroup>
 		<tr align="center" bgcolor="#dddddd">
 			<th>ID</th>
+			<th>商品ID</th>
 			<th>備品名</th>
 			<th>在庫</th>
 			<th>使用</th>
@@ -51,6 +53,7 @@
 		</tr>
 		<tr th:each="item : ${items}">
 			<td align="center" th:text="${item.id}"></td>
+			<td align="center" th:text="${item.itemCode}"></td>
 			<td th:text="${item.name}"></td>
 			<td align="right" th:text="${item.stock}" th:style="${item.stock <= 2} ? 'color:red': ''"></td>
 

@@ -4,9 +4,9 @@
 <!-- 履歴登録 -->
 <insert id="insertHistory">
 	INSERT INTO stock_history
-	(item_id,item_name,action_type,quantity,username,action_date)
+	(item_id,item_code,item_name,action_type,quantity,username,action_date)
 	VALUES
-	(#{itemId},#{itemName},#{actionType},#{quantity},#{username},#{actionDate})
+	(#{itemId},#{itemCode},#{itemName},#{actionType},#{quantity},#{username},#{actionDate})
 </insert>
 
 <!-- 日付降順で取得 -->

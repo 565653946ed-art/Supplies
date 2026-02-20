@@ -9,6 +9,7 @@ public class StockHistory {
 	
 	private Integer historyId;
 	private Integer itemId;
+	private String itemCode;
 	private String itemName;
 	private String actionType;
 	private Integer quantity;

@@ -16,7 +16,8 @@ CREATE TABLE users (
 -- 備品テーブル
 CREATE TABLE items (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  item_code VARCHAR(30),
+  name VARCHAR(100) NOT NULL UNIQUE,
   stock INT NOT NULL,
   pending_usage INT NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
@@ -26,10 +27,12 @@ CREATE TABLE items (
 CREATE TABLE stock_history(
     history_id INT AUTO_INCREMENT PRIMARY KEY,
     item_id INT,
+    item_code VARCHAR(30),
     item_name VARCHAR(100) NOT NULL,
     action_type VARCHAR(50),
     quantity INT,
     username VARCHAR(100),
     action_date DATETIME
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 

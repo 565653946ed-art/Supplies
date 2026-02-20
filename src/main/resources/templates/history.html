@@ -40,7 +40,7 @@
 		</tr>
 		<tr th:each="history : ${historyList}">
 			<td th:text="${#temporals.format(history.actionDate, 'yyyy-MM-dd HH:mm')}"></td>
-			<td th:text="${history.itemId}"></td>
+			<td th:text="${history.itemCode}"></td>
 			<td th:text="${history.itemName}"></td>
 			<td th:text="${history.actionType}"></td>
 			<td th:text="${history.quantity}"></td>
