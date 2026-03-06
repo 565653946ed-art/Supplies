@@ -26,4 +26,6 @@ public interface ItemService {
 	void confirmAllPendingUsage();
 	//使用数仮記録リセット
 	void resetAllPendingUsage();
+	//発注点
+	void updateReorderPoint(Integer id, Integer reorderPoint);
 }

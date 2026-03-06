@@ -10,7 +10,9 @@
 		item_code,
 		name,
 		stock,
-		pending_usage AS pendingUsage
+		pending_usage AS
+		pendingUsage,
+		reorder_point AS reorderPoint
 		FROM items;
 	</select>
 	<!-- IDで一件取得 -->
@@ -21,7 +23,9 @@
 		item_code,
 		name,
 		stock,
-		pending_usage AS pendingUsage
+		pending_usage AS
+		pendingUsage,
+		reorder_point AS reorderPoint
 		FROM items WHERE id = #{id};
 	</select>
 	<!-- 商品情報更新 -->
@@ -41,8 +45,9 @@
 	<!-- 商品追加 -->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
 		INSERT
-		INTO items(name,stock)
-		VALUES (#{name},#{stock})
+		INTO items(name,stock,reorder_point)
+		VALUES
+		(#{name},#{stock},#{reorderPoint})
 	</insert>
 	<!-- 商品削除 -->
 	<delete id="deleteById">
@@ -65,9 +70,12 @@
 		item_code,
 		name,
 		stock,
-		pending_usage AS pendingUsage
+		pending_usage AS
+		pendingUsage,
+		reorder_point AS reorderPoint
 		FROM items
-		WHERE pending_usage > 0
+		WHERE
+		pending_usage > 0
 	</select>
 	<!-- 使用を確定 -->
 	<update id="confirmUsage">
@@ -91,9 +99,16 @@
 	<!-- 同じ名前がないかチェック -->
 	<select id="existsByName" resultType="boolean">
 		SELECT COUNT(*) > 0
-		FROM items
+		FROM
+		items
 		WHERE name = #{name}
 	</select>
+	<!-- 発注点 -->
+	<update id="updateReorderPoint">
+		UPDATE items
+		SET reorder_point = #{reorderPoint}
+		WHERE id = #{id}
+	</update>
 
 
 
