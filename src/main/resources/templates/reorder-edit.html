@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>発注点変更</title>
+</head>
+
+<body>
+
+<h1 align="center">発注点変更</h1>
+
+<table border="0" style="width:100%; max-width:800px; margin:0 auto;">
+    <tr>
+        <td align="left">
+            <p sec:authorize="hasRole('ADMIN')">
+                👑 管理者ユーザー
+            </p>
+
+            <p sec:authorize="!hasRole('ADMIN')">
+                👤 ログインユーザー
+            </p>
+
+           <span th:text="${loginUserName} + ' さん'"></span>
+        </td>
+
+        <td align="right">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit">ログアウト</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<hr>
+
+<div align="center">
+
+    <h3>商品情報</h3>
+
+    <p>
+        商品コード：
+        <span th:text="${item.itemCode}"></span>
+    </p>
+
+    <p>
+        商品名：
+        <span th:text="${item.name}"></span>
+    </p>
+
+    <p>
+        現在の在庫：
+        <span th:text="${item.stock}"></span>
+    </p>
+
+    <p>
+        現在の発注点：
+        <span th:text="${item.reorderPoint}"></span>
+    </p>
+
+    <hr>
+
+    <h3>新しい発注点を設定</h3>
+
+    <form th:action="@{/menu/reorder/update}" method="post">
+
+        <input type="hidden" name="id" th:value="${item.id}" />
+
+        新しい発注点：
+        <input type="number" name="reorderPoint" min="0" required />
+
+        <br><br>
+
+        <button type="submit">更新する</button>
+
+    </form>
+
+</div>
+
+<hr>
+
+<div align="center">
+    <form th:action="@{/menu}" method="get" style="display:inline;">
+        <button type="submit">MENUへ戻る</button>
+    </form>
+</div>
+
+</body>
+</html>

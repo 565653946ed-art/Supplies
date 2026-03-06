@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>追加画面</title>
+	<meta charset="UTF-8">
+	<title>追加画面</title>
 </head>
+
 <body>
 
-<h1 align="center">備品を追加</h1>
+	<h1 align="center">備品を追加</h1>
 
-<form th:action="@{/menu/add}" method="post">
-    <table align="center" cellpadding="5">
-        <tr>
-            <td align="right">備品名：</td>
-            <td>
-                <input type="text" name="name" required>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">在庫数：</td>
-            <td>
-                <input type="number" name="stock" min="0" required>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <button type="submit">追加</button>
-            </td>
-        </tr>
-    </table>
-</form>
+	<form th:action="@{/menu/add}" method="post">
+		<table align="center" cellpadding="5">
+			<tr>
+				<td align="right">備品名：</td>
+				<td>
+					<input type="text" name="name" required>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">在庫数：</td>
+				<td>
+					<input type="number" name="stock" min="0" required>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">発注点：</td>
+				<td>
+					<input type="number" name="reorderPoint" min="0" required>
+				</td>
+			</tr>
 
-<br>
 
-<div align="center">
-    <a th:href="@{/menu}">MENUに戻る</a>
-	<p th:if="${errorMessage}"
-	   th:text="${errorMessage}"
-	   style="color:red;">
-	</p>
-</div>
+
+			<tr>
+				<td colspan="2" align="center">
+					<button type="submit">追加</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<br>
+
+	<div align="center">
+		<a th:href="@{/menu}">MENUに戻る</a>
+		<p th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;">
+		</p>
+	</div>
 
 </body>
+
 </html>

@@ -125,5 +125,15 @@ public class ItemServiceImpl implements ItemService {
 
 		return itemMapper.findItemsWithPendingUsage();
 	}
+	//発注点
+	@Override
+	public void updateReorderPoint(Integer id, Integer reorderPoint) {
+
+	    if (reorderPoint < 0) {
+	        throw new IllegalArgumentException("発注点は0以上で入力してください");
+	    }
+
+	    itemMapper.updateReorderPoint(id, reorderPoint);
+	}
 
 }

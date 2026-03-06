@@ -38,6 +38,7 @@
 			<col width="60">
 			<col width="100">
 			<col width="100">
+			<col width="100">
 			<col width="80">
 			<col width="120">
 		</colgroup>
@@ -48,6 +49,8 @@
 			<th>在庫</th>
 			<th>使用</th>
 			<th>使用予定</th>
+			<th>発注点</th>
+			<th>発注点変更</th>
 			<th>注文</th>
 			<th>削除</thsec:authorize="hasRole('ADMIN')">
 		</tr>
@@ -55,7 +58,7 @@
 			<td align="center" th:text="${item.id}"></td>
 			<td align="center" th:text="${item.itemCode}"></td>
 			<td th:text="${item.name}"></td>
-			<td align="right" th:text="${item.stock}" th:style="${item.stock <= 2} ? 'color:red': ''"></td>
+			<td align="right" th:text="${item.stock}" th:style="${item.stock <= item.reorderPoint} ? 'color:red' : ''"></td>
 
 			<td align="center">
 				<form th:action="@{/menu/usage/pending}" method="post">
@@ -69,13 +72,24 @@
 
 			</td>
 			<td align="right" th:text="${item.pendingUsage}">0</td>
+			<td align="right" th:text="${item.reorderPoint}"></td>
+			<td align="center" >
+			    <form sec:authorize="hasRole('ADMIN')" th:action="@{/menu/reorder/{id}(id=${item.id})}" method="get">
+			        <button type="submit">変更</sec:authorize="hasRole('ADMIN')"button>
+			    </form>
+			</td>
 
 			<td align="center">
 				<form th:action="@{/menu/order/{id}(id=${item.id})}" method="get">
 					<button type="submit">注文</button>
+					<!-- 発注必要表示 -->
+					   <div th:if="${item.stock <= item.reorderPoint}" style="color:red;">
+					       ⚠ 発注が必要
+					   </div>
 
 				</form>
 			</td>
+			
 			<td align="center">
 
 				<form sec:authorize="hasRole('ADMIN')" th:action="@{/menu/delete/{id}(id=${item.id})}" method="post"
@@ -108,7 +122,7 @@
 				</form>
 
 	</div>
-	<p sec:authorize="hasRole('USER')" align="center">[削除][備品追加]は管理者のみ</p>
+	<p sec:authorize="hasRole('USER')" align="center">[発注点変更][削除][備品追加]は管理者のみ</p>
 	<p sec:authorize="hasRole('ADMIN')" align="center">[削除]は在庫数０の時のみ</p>
 
 

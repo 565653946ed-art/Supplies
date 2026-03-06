@@ -42,6 +42,9 @@ public interface ItemMapper {
             @Param("itemCode") String itemCode);
 	//同じ名前はないか判断
 	boolean existsByName(String name);
-	
+	// 発注点更新
+	void updateReorderPoint(
+	        @Param("id") Integer id,
+	        @Param("reorderPoint") Integer reorderPoint);
 
 }

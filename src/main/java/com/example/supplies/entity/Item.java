@@ -23,5 +23,7 @@ public class Item {
 	private Integer stock;
 	//商品在庫 確定待ちの使用数
 	private Integer pendingUsage;
+	//発注点
+	private Integer reorderPoint;
 
 }

@@ -20,6 +20,7 @@ CREATE TABLE items (
   name VARCHAR(100) NOT NULL UNIQUE,
   stock INT NOT NULL,
   pending_usage INT NOT NULL DEFAULT 0,
+  reorder_point INT NOT NULL DEFAULT 5,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

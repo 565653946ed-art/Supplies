@@ -3,7 +3,9 @@ package com.example.supplies.controller;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -104,6 +106,32 @@ public class ItemController {
 	public String resetAllUsage() {
 		itemService.resetAllPendingUsage();
 		return "redirect:/menu";
+	}
+	// 発注点変更画面表示
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/reorder/{id}")
+	public String showReorderForm(@PathVariable Integer id, Model model) {
+
+	    Item item = itemService.findAll()
+	                           .stream()
+	                           .filter(i -> i.getId().equals(id))
+	                           .findFirst()
+	                           .orElseThrow();
+
+	    model.addAttribute("item", item);
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    model.addAttribute("loginUserName", auth.getName());
+
+	    return "reorder-edit";
+	}
+	// 発注点更新
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/reorder/update")
+	public String updateReorderPoint(Integer id, Integer reorderPoint) {
+
+	    itemService.updateReorderPoint(id, reorderPoint);
+
+	    return "redirect:/menu";
 	}
 
 }
